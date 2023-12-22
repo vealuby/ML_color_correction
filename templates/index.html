@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename = '../static/css/index.css') }}">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="{{ url_for('static', filename = '../static/font/stylesheet.css') }}" rel="stylesheet"> 
+
+    <meta charset="UTF-8">
+    <title>Цветокор</title>
+</head>
+<body>
+    <div class="header"><h1><a href="/">Юзтех x Очумелые ручки</a></h1></div>
+
+   <div class="center__container">
+
+        <div class="input__container">
+
+            <div class="imgs__container">
+                <div class="img__container">
+                    <img class="original">
+                </div> 
+                <div class="img__container">
+                    <img class="result">
+                </div> 
+            </div>
+
+            <div class="text__container">
+                <div class="result_text"></div>
+
+                <label for="photo">Загрузите фото для цветокора</label>
+                <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" />   
+            </div>
+
+        </div> 
+   </div>
+</body>
+
+
+<script src="{{url_for('static', filename='../static/js/index.js')}}"></script>
+
+</html>

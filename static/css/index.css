@@ -1,0 +1,81 @@
+*{
+    box-sizing: border-box;
+}
+  
+html{
+    min-height: 100vh;
+}
+  
+body{
+    color: black;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'CoFo Sans';
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+
+a{
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:visited {
+    color: black;
+  }
+
+
+a {
+    background: 
+      linear-gradient(to right, white, white),
+      linear-gradient(to right, black, black, black);
+    background-size: 100% 0.1em, 0 0.1em;
+    background-position: 100% 100%, 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms;
+  }
+  
+  a:hover,
+  a:focus {
+    background-size: 0 0.1em, 100% 0.1em;
+  }
+
+.header{
+    text-align: center;
+}
+
+.center__container{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5% 15%;
+}
+
+.imgs__container{
+    display: flex;
+}
+
+.text__container{
+    padding: 10px 25%;
+}
+
+.input__container{
+    max-width: 100%;
+}
+
+.img__container{
+    max-height: 40%;
+    max-width: 100%;
+    padding: 0 10px;
+}
+
+.img{
+    max-width: 100%;
+}
+
+img{
+    max-width: 100%;
+}
