@@ -14,7 +14,7 @@ import asyncio
 async def color_transfer(source, target):
     source = cv2.cvtColor(source, cv2.COLOR_BGR2LAB).astype("float32")
     target = cv2.cvtColor(target, cv2.COLOR_BGR2LAB).astype("float32")
-    print(np.std(source),np.std(target))
+    # print(np.std(source),np.std(target))
 
     (lMeanSrc, lStdSrc, aMeanSrc, aStdSrc, bMeanSrc, bStdSrc) = await image_stats(source)
     (lMeanTar, lStdTar, aMeanTar, aStdTar, bMeanTar, bStdTar) = await image_stats(target)
@@ -24,7 +24,7 @@ async def color_transfer(source, target):
     a -= aMeanTar
     b -= bMeanTar
     # scale by the standard deviations
-    print((lStdTar ,lStdSrc), aStdTar / aStdSrc, bStdTar / bStdSrc)
+    # print((lStdTar ,lStdSrc), aStdTar / aStdSrc, bStdTar / bStdSrc)
     l = (lStdTar / lStdSrc) * l
     a = (aStdTar / aStdSrc) * a
     b = (bStdTar / bStdSrc) * b
@@ -65,7 +65,7 @@ async def individual_channel(image, dist, channel):
     freq, bins = cumulative_distribution(im_channel)
     new_vals = np.interp(freq, dist.cdf(np.arange(0,256)),
                                np.arange(0,256))
-    print(new_vals.shape)
+    # print(new_vals.shape)
     return new_vals[im_channel-uniq_list[0]].astype(np.uint8)
 
 # Изменение изображения на основе его распределения
@@ -89,14 +89,14 @@ async def CLAHE(img):
     max_val = np.max(np.unique(b))
     b_glare = np.where(b < max_val * 0.6, 0, 10)
     #b -= b_glare
-    #print(b_glare.shape,np.)
+    # print(b_glare.shape,np.)
     b = clahe.apply(b)
     g = clahe.apply(g)
     r = clahe.apply(r)
 
     result = cv2.merge((b,g,r))
     result = cv2.cvtColor(result, cv2.COLOR_LAB2BGR)
-    print(b.shape,np.unique(b))
+    # print(b.shape,np.unique(b))
     return result
 
 async def convert_to_rgb(img):
@@ -112,6 +112,7 @@ async def change_main_img(source,color):
         new_img = await convert_to_rgb(new_img)
         return new_img
     else:
+        source = await CLAHE(source)
         source = await convert_to_rgb(source)
         return source
 
@@ -121,7 +122,8 @@ async def color_change(source, target, color):
     img_var = np.std(new_img)
     if color:
         new_img = await change_mean(new_img, cauchy, img_mean * 0.6, img_var * 0.5)
-
+    else:
+        new_img = await CLAHE(new_img)
     new_img = await convert_to_rgb(new_img)
     return new_img
 
