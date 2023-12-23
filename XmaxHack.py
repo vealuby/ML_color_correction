@@ -127,3 +127,23 @@ async def color_change(source, target, color):
     new_img = await convert_to_rgb(new_img)
     return new_img
 
+async def video_change(source, video_path, color):
+
+    video = cv2.VideoCapture(video_path)
+
+    fourcc = int(video.get(cv2.CAP_PROP_FOURCC))
+    fps = video.get(cv2.CAP_PROP_FPS)
+    h = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    w = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    output_video = cv2.VideoWriter(video_path, fourcc, 30, (w, h))
+
+    while True:
+        ret, frame = video.read()
+
+        if not ret:
+            break
+
+        new_frame = await color_change(source, frame, color)
+        output_video.write(new_frame)
+
+    return 

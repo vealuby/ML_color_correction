@@ -1,12 +1,12 @@
-from flask import Flask, jsonify, request, Response, render_template
+from flask import Flask, jsonify, request, render_template, send_file, after_this_request
+import os
 from XmaxHack import *
+from random import randint
 
 import base64
 
-# Init the app
 app = Flask(__name__)
 
-# Setup prediction endpoint
 @app.route("/api/correct_image", methods=["POST"])
 async def correct_image():
 
@@ -62,11 +62,50 @@ async def correct_etalon():
 
     return jsonify({'base64': base64_string})
 
+@app.route("/api/correct_video", methods=["POST"])
+async def correct_video():
+
+    video_file = request.files['video']
+    etalon_file = request.files['etalon']
+
+
+    temp_filename = 'temp/temp%d.mp4' % randint(0, 5000)
+    video_file.save(temp_filename)
+    
+    etalon = Image.open(etalon_file)
+    etalon_array = np.array(etalon)
+
+    # video_path = await video_change(cv2.cvtColor(etalon_array, cv2.COLOR_RGB2BGR), temp_filename, True)
+    video_path = temp_filename
+    return jsonify({'link': video_path})
 
 
 @app.route("/", methods=["GET"])
 async def index():
     return render_template('index.html')
+
+@app.route("/video", methods=["GET"])
+async def video_index():
+    return render_template('video_index.html')
+
+@app.route('/temp/<filename>/')
+async def download(filename):
+
+    return_data = io.BytesIO()
+    try:
+        with open('temp/%s' % filename, 'rb') as fo:
+            return_data.write(fo.read())
+        return_data.seek(0)
+    except:
+        return render_template('video_index.html')
+
+    try:
+        os.remove('temp/%s' % filename)
+    except Exception as e:
+        print(e)
+
+    return send_file(return_data, mimetype='video/mp4',
+                     download_name='processed_video.pdf', as_attachment=True)
 
 
 if __name__ == "__main__":

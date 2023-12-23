@@ -1,8 +1,10 @@
-const input_file_photos = document.querySelector("#photo");
 const input_file_etalon = document.querySelector("#etalon");
+const etalon_img = document.querySelector(".etalon");
+
+
+const input_file_photos = document.querySelector("#photo");
 const orig_container = document.querySelectorAll('.img__container')[1]
 const result_container = document.querySelectorAll('.img__container')[2]
-const etalon_img = document.querySelector(".etalon");
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -31,7 +33,7 @@ async function get_result(form_data, mime_type, i){
   
   }
 
-  async function change_etalon(form_data, mime_type){
+async function change_etalon(form_data, mime_type){
     await fetch('/api/correct_etalon', {
     method: 'POST',
     body: form_data // This is your file object
@@ -44,7 +46,7 @@ async function get_result(form_data, mime_type, i){
       })
     .catch(err => console.log(err))
   
-  }
+}
 
 input_file_photos.addEventListener("change", (event) => {
 

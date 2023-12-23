@@ -21,14 +21,19 @@
 
             <div class="imgs__container">
                 <div class="img__container">
+
                     <div class="img__label">Эталонное изображение</div>
                     <img class="etalon">
+                        
                 </div> 
+                
                 <div class="img__container">
-                    <div class="img__label">Оригинальные изображения</div>
-                </div> 
-                <div class="img__container">
-                    <div class="img__label">Скорректированные изображения</div>
+
+                    <div class="img__label">Ссылка на видео</div>
+                    <div class="heafer">
+                        <a href="" id="download"></a>
+                    </div>
+                    
                 </div> 
             </div>
 
@@ -41,8 +46,8 @@
                 </div>
                 
                 <div>
-                    <label for="photo">Загрузите фотографии для коррекции</label>
-                    <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" multiple />  
+                    <label for="video">Загрузите видео для коррекции</label>
+                    <input type="file" id="video" name="video" accept="video/mp4, video/x-m4v" />
                 </div>
                 
             </div>
@@ -52,6 +57,6 @@
 </body>
 
 
-<script src="{{url_for('static', filename='../static/js/index.js')}}"></script>
+<script src="{{url_for('static', filename='../static/js/video_index.js')}}"></script>
 
 </html>
