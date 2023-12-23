@@ -4,7 +4,11 @@ const orig_container = document.querySelectorAll('.img__container')[1]
 const result_container = document.querySelectorAll('.img__container')[2]
 const etalon_img = document.querySelector(".etalon");
 
-async function get_result(form_data, mime_type){
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function get_result(form_data, mime_type, i){
     await fetch('/api/correct_image', {
     method: 'POST',
     body: form_data // This is your file object
@@ -15,6 +19,11 @@ async function get_result(form_data, mime_type){
         var res = document.createElement("img");
         res.className = 'result';
         res.src = `data:${mime_type};base64,${data.base64}`;
+
+        // while (result_container.children.length < i){
+        //   sleep(0.5 * 1000);
+        // }
+
         result_container.appendChild(res);
 
       })
@@ -64,12 +73,12 @@ input_file_photos.addEventListener("change", (event) => {
         let reader = new FileReader();
         mime_type = photos[i]['type'];
 
-        reader.onload = (function(etalon, file, mimeType) {
+        reader.onload = (function(etalon, file, mimeType, i) {
           return function(e) {
               let individualFormData = new FormData();
               individualFormData.append('etalon', etalon);
               individualFormData.append('image', file);
-              get_result(individualFormData, mimeType);
+              get_result(individualFormData, mimeType, i);
 
               var orig = document.createElement("img");
               orig.className = 'result';
@@ -78,7 +87,7 @@ input_file_photos.addEventListener("change", (event) => {
 
           };
 
-        })(etalon, photos[i], mime_type);
+        })(etalon, photos[i], mime_type, i);
         
         reader.readAsDataURL(photos[i]);
 
