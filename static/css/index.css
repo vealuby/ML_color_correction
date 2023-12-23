@@ -70,8 +70,16 @@ a {
 
 .img__container{
     max-height: 70%;
-    max-width: 50%;
+    max-width: calc(100% / 3);
     padding: 0 10px;
+}
+
+.img__label{
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    font-family: 'CoFo Sans';
+    max-width: 100%;
 }
 
 .img{
