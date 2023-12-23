@@ -22,10 +22,6 @@ async function get_result(form_data, mime_type, i){
         res.className = 'result';
         res.src = `data:${mime_type};base64,${data.base64}`;
 
-        // while (result_container.children.length < i){
-        //   sleep(0.5 * 1000);
-        // }
-
         result_container.appendChild(res);
 
       })
