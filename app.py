@@ -11,6 +11,7 @@ app = Flask(__name__)
 async def correct_image_test():
 
     img = request.files['image']
+
     image = Image.open(img)
         
     image_array = np.array(image)
