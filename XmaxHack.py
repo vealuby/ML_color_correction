@@ -130,20 +130,27 @@ async def color_change(source, target, color):
 async def video_change(source, video_path, color):
 
     video = cv2.VideoCapture(video_path)
+    format_video = 'mp4'
 
     fourcc = int(video.get(cv2.CAP_PROP_FOURCC))
     fps = video.get(cv2.CAP_PROP_FPS)
     h = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     w = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-    output_video = cv2.VideoWriter(video_path, fourcc, 30, (w, h))
+    output_video = cv2.VideoWriter('%s_corrected.mp4' % video_path.split('.')[0], fourcc, 30, (w, h))
 
     while True:
         ret, frame = video.read()
-
         if not ret:
             break
 
         new_frame = await color_change(source, frame, color)
+        # center = (int(w / 2), int(h / 2))
+        # rotation_matrix = cv2.getRotationMatrix2D(center, 180, 1)
+        # rotated = cv2.warpAffine(new_frame, rotation_matrix, (w, h))
+        new_frame = await convert_to_rgb(new_frame)
         output_video.write(new_frame)
 
-    return 
+    video.release()
+    output_video.release()
+
+    return video_path

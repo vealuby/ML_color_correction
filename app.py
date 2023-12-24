@@ -75,9 +75,9 @@ async def correct_video():
     etalon = Image.open(etalon_file)
     etalon_array = np.array(etalon)
 
-    # video_path = await video_change(cv2.cvtColor(etalon_array, cv2.COLOR_RGB2BGR), temp_filename, True)
-    video_path = temp_filename
-    return jsonify({'link': video_path})
+    video_path = await video_change(cv2.cvtColor(etalon_array, cv2.COLOR_RGB2BGR), temp_filename, False)
+    # video_path = temp_filename
+    return jsonify({'link': '%s_corrected.mp4' % video_path.split('.')[0] })
 
 
 @app.route("/", methods=["GET"])
@@ -101,11 +101,12 @@ async def download(filename):
 
     try:
         os.remove('temp/%s' % filename)
+        os.remove('temp/%s' % filename.replace('_corrected', ''))
     except Exception as e:
         print(e)
 
     return send_file(return_data, mimetype='video/mp4',
-                     download_name='processed_video.pdf', as_attachment=True)
+                     download_name='processed_video.mp4', as_attachment=True)
 
 
 if __name__ == "__main__":

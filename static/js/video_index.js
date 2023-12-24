@@ -4,6 +4,8 @@ const etalon_img = document.querySelector(".etalon");
 const input_file_video = document.querySelector("#video");
 const a_download = document.querySelector("#download");
 
+const loader = document.querySelector('.loader');
+
 async function process_video(form_data, mime_type){
     await fetch('/api/correct_video', {
     method: 'POST',
@@ -14,6 +16,7 @@ async function process_video(form_data, mime_type){
 
         a_download.href = data.link;
         a_download.innerHTML = 'Скачать';
+        loader.style.display = "none"; 
 
       })
     .catch(err => console.log(err))
@@ -51,6 +54,8 @@ input_file_video.addEventListener("change", (event) => {
 
   reader.onload = (function(etalon, file, mimeType) {
     return function(e) {
+      
+        loader.style.display = "block"; 
         let individualFormData = new FormData();
         individualFormData.append('etalon', etalon);
         individualFormData.append('video', file);
