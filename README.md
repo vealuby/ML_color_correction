@@ -1,4 +1,4 @@
-# ML_color_correction
+# Цветокореекция изображений и видео
 
 Color correction for pics and vids using ML
 
