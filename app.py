@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template, send_file, after_this_request
 import os
-from XmaxHack import *
+from ColorCorrection import *
 from random import randint
 
 import base64
