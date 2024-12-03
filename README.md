@@ -22,13 +22,17 @@
 1) Цветокоррекция фотографий ёлочки с различных телефонов
 
 <div align="center">
+   
 ![Елочки](https://github.com/user-attachments/assets/e4d9b082-aac3-4187-86cc-522cfe8ca1b5)
+
 </div>
 
 3) Цветокоррекция случайных изображений
 
 <div align="center">
+   
    ![Строения](https://github.com/user-attachments/assets/a5cc0868-dbdb-44f8-89c5-ee40c0b84777)
+
 </div>
 
 Сборка и запуск
